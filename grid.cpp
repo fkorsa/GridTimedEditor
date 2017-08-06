@@ -12,6 +12,10 @@ Grid::Grid(QSize size)
 void Grid::setCell(QPointF position)
 {
     QPoint gridPosition(position.x() / unitSize, position.y() / unitSize);
+    if (gridPosition.x() >= size.width() || gridPosition.y() >= size.height())
+    {
+        return;
+    }
     size_t offset = gridPosition.y() * size.width() + gridPosition.x();
     if (!grid[offset].isSet)
     {
@@ -28,6 +32,10 @@ void Grid::setCell(QPointF position)
 void Grid::unsetCell(QPointF position)
 {
     QPoint gridPosition(position.x() / unitSize, position.y() / unitSize);
+    if (gridPosition.x() >= size.width() || gridPosition.y() >= size.height())
+    {
+        return;
+    }
     size_t offset = gridPosition.y() * size.width() + gridPosition.x();
     if (grid[offset].isSet)
     {
