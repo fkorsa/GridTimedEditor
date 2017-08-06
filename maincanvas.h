@@ -16,11 +16,13 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     
 private:
-    Grid grid;
     QSize gridSize;
     const int unitSize;
+    const int borderSpacing;
     bool isLeftButtonPressed;
     bool isRightButtonPressed;
+    int gridCount;
+    std::vector<Grid*> grids;
 };
 
 #endif // MAINCANVAS_H
