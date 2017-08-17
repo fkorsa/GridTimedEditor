@@ -29,7 +29,7 @@
          <widget class="MainCanvas" name="graphicsView"/>
         </item>
         <item row="1" column="1">
-         <widget class="QSlider" name="horizontalSlider">
+         <widget class="QSlider" name="timeSlider">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -58,6 +58,32 @@
           </property>
           <property name="sizeType">
            <enum>QSizePolicy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>

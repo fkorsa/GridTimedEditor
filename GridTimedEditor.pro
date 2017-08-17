@@ -35,4 +35,5 @@ HEADERS += \
     grid.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    maindialog.ui

@@ -8,6 +8,8 @@ class MainCanvas : public QGraphicsView
 {
 public:
     MainCanvas(QWidget* parent);
+    void setTime(size_t time);
+    void setFramesCount(size_t framesCount);
     
 protected:
     void resizeEvent(QResizeEvent *event);
@@ -22,6 +24,7 @@ private:
     bool isLeftButtonPressed;
     bool isRightButtonPressed;
     int gridCount;
+    size_t currentTime;
     std::vector<Grid*> grids;
 };
 
