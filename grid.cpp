@@ -60,3 +60,18 @@ void Grid::unsetCell(QPointF position)
         grid[offset].rectItem = nullptr;
     }
 }
+
+bool Grid::isCellSet(QPoint position)
+{
+    if (position.x() >= size.width() 
+            || position.y() >= size.height()
+            || position.x() < 0
+            || position.y() < 0)
+    {
+        Q_ASSERT(false);
+        return false;
+    }
+    size_t offset = position.y() * size.width() + position.x();
+    return grid[offset].isSet;
+}
+

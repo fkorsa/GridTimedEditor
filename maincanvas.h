@@ -9,10 +9,11 @@ class MainCanvas : public QGraphicsView
 public:
     MainCanvas(QWidget* parent);
     void setTime(size_t time);
-    void setFramesCount(size_t framesCount);
+    void setFrameCount(size_t framesCount);
+    void initialize(QSize gridSize, size_t frameCount);
+    void saveTo(QString path);
     
 protected:
-    void resizeEvent(QResizeEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

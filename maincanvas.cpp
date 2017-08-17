@@ -3,9 +3,11 @@
 #include <QDebug>
 #include <QResizeEvent>
 
+#define TMG_VERSION 1
+
 MainCanvas::MainCanvas(QWidget *parent)
     : QGraphicsView(parent),
-      gridSize(5, 5),
+      gridSize(0, 0),
       gridCount(5),
       isLeftButtonPressed(false),
       isRightButtonPressed(false),
@@ -13,12 +15,6 @@ MainCanvas::MainCanvas(QWidget *parent)
       borderSpacing(10),
       currentTime(0)
 {
-    grids.push_back(new Grid(gridSize));
-    setScene(grids[0]);
-    setSceneRect(-borderSpacing, -borderSpacing, unitSize * gridSize.width() + 2 * borderSpacing, unitSize * gridSize.height() + 2 * borderSpacing);
-    QSize fixedSize(unitSize * gridSize.width() + 5 * borderSpacing, unitSize * gridSize.height() + 5 * borderSpacing);
-    //setMinimumSize(fixedSize);
-    setMaximumSize(fixedSize);
 }
 
 void MainCanvas::setTime(size_t time)
@@ -27,42 +23,74 @@ void MainCanvas::setTime(size_t time)
     setScene(grids[currentTime]);
 }
 
-void MainCanvas::setFramesCount(size_t framesCount)
+void MainCanvas::setFrameCount(size_t frameCount)
 {
-    if(framesCount == 0)
+    if(frameCount == 0)
     {
         Q_ASSERT(false);
         return;
     }
-    if(framesCount < grids.size())
+    if(frameCount < grids.size())
     {
-        if(currentTime > framesCount)
+        if(currentTime > frameCount)
         {
-            setTime(framesCount - 1);
+            setTime(frameCount - 1);
         }
-        for(size_t i = framesCount; i < grids.size(); i++)
+        for(size_t i = frameCount; i < grids.size(); i++)
         {
             delete grids[i];
         }
-        grids.resize(framesCount);
+        grids.resize(frameCount);
     }
-    else if(framesCount > grids.size())
+    else if(frameCount > grids.size())
     {
-        grids.resize(framesCount);
-        for(size_t i = framesCount; i < grids.size(); i++)
+        size_t oldGridSize = grids.size();
+        grids.resize(frameCount);
+        for(size_t i = oldGridSize; i < frameCount; i++)
         {
             grids[i] = new Grid(gridSize);
         }
     }
 }
 
-void MainCanvas::resizeEvent(QResizeEvent *event)
+void MainCanvas::initialize(QSize gridSize, size_t frameCount)
 {
-    /*
-    qreal newX = (qreal)event->size().width() / ((qreal)gridSize.width() * 100.0);
-    scale((qreal)event->size().width() / ((qreal)gridSize.width() * 100.0), 
-          (qreal)event->size().height() / ((qreal)gridSize.height() * 100.0));*/
-    QGraphicsView::resizeEvent(event);
+    this->gridSize = gridSize;
+    setFrameCount(frameCount);
+    setScene(grids[0]);
+    setSceneRect(-borderSpacing, -borderSpacing, unitSize * gridSize.width() + 2 * borderSpacing, unitSize * gridSize.height() + 2 * borderSpacing);
+    QSize fixedSize(unitSize * gridSize.width() + 5 * borderSpacing, unitSize * gridSize.height() + 5 * borderSpacing);
+    setMaximumSize(fixedSize);
+}
+
+void MainCanvas::saveTo(QString path)
+{
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        Q_ASSERT(false);
+        return;
+    }
+    
+    QTextStream out(&file);
+    out << TMG_VERSION << endl;
+    out << gridSize.width() << " " << gridSize.height() << endl;
+    out << grids.size() << endl;
+    
+    for(size_t t = 0; t < grids.size(); t++)
+    {
+        for(size_t y = 0; y < gridSize.height(); y++)
+        {
+            for(size_t x = 0; x < gridSize.width(); x++)
+            {
+                out << grids[t]->isCellSet(QPoint(x, y)) << " ";
+            }
+            out << endl;
+        }
+        out << endl;
+    }
+    
+    file.close();
 }
 
 void MainCanvas::mousePressEvent(QMouseEvent *event)

@@ -27,13 +27,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     maincanvas.cpp \
-    grid.cpp
+    grid.cpp \
+    mainwidget.cpp
 
 HEADERS += \
         mainwindow.h \
     maincanvas.h \
-    grid.h
+    grid.h \
+    mainwidget.h
 
 FORMS += \
         mainwindow.ui \
-    maindialog.ui
+    maindialog.ui \
+    newfiledialog.ui \
+    mainwidget.ui

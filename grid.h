@@ -11,6 +11,7 @@ public:
     
     void setCell(QPointF position);
     void unsetCell(QPointF position);
+    bool isCellSet(QPoint position);
     
 private:
     struct Cell
