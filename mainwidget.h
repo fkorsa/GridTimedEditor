@@ -14,7 +14,11 @@ class MainWidget : public QWidget
 public:
     explicit MainWidget(QSize gridDimensions, size_t frameCount);
     ~MainWidget();
-    void saveTo(QString path);
+    void save();
+    void saveAs();
+    
+signals:
+    void nameChanged(QString newName);
     
 private slots:
     void onTimeSliderChanged(int newValue);
@@ -23,6 +27,8 @@ private:
     Ui::MainWidget *ui;
     QSize gridDimensions;
     size_t frameCount;
+    QString currentFilePath;
+    bool hasFilename;
 };
 
 #endif // MAINWIDGET_H

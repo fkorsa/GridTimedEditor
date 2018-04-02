@@ -19,7 +19,9 @@ public:
     
 private slots:
     void onNewFileClicked();
+    void onSaveAsClicked();
     void onSaveClicked();
+    void onTabNameChange(int tabIndex, QString newName);
     
 private:
     Ui::MainWindow *ui;
